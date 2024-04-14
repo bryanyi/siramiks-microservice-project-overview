@@ -7,7 +7,7 @@ This e-commerce microservices project was developed to deepen my understanding o
 - [Product Service](https://github.com/bryanyi/siramiks-ProductService)
 - [Order Service](https://github.com/bryanyi/siramiks-OrderService)
 - [Payment Service](https://github.com/bryanyi/siramiks-PaymentService)
-- [Authentication Service](https://github.com/bryanyi/AUTH-SERVICE)
+- [Authentication Service](https://github.com/bryanyi/Siramiks-Auth-Service)
 - [API Gateway](https://github.com/bryanyi/siramiks-ApiGateway)
 - [Service Discovery](https://github.com/bryanyi/siramiks-ServiceDiscovery)
 
