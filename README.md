@@ -7,6 +7,7 @@ This e-commerce microservices project was developed to deepen my understanding o
 - [Product Service](https://github.com/bryanyi/siramiks-ProductService)
 - [Order Service](https://github.com/bryanyi/siramiks-OrderService)
 - [Payment Service](https://github.com/bryanyi/siramiks-PaymentService)
+- [Authentication Service](https://github.com/bryanyi/AUTH-SERVICE)
 - [API Gateway](https://github.com/bryanyi/siramiks-ApiGateway)
 - [Service Discovery](https://github.com/bryanyi/siramiks-ServiceDiscovery)
 
@@ -24,8 +25,9 @@ The project consists of the following services:
 ## Technologies Used
 - Spring Boot
 - Spring Cloud
-- Eureka (Service Registry)
-- OpenFeign (Service-to-Service Communication)
+- Spring Security (JWT)
+- Eureka 
+- OpenFeign
 - Zipkin (Distributed Tracing)
 - Redis (Caching and Rate Limiting)
 - Postgres
