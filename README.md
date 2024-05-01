@@ -33,5 +33,3 @@ The project consists of the following services:
 - Postgres
 - Docker
 - Stripe
-
-

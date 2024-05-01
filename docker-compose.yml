@@ -1,0 +1,129 @@
+---
+
+version: "3"
+
+services:
+
+  zipkin1:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+
+  redis:
+    image: redis/redis-stack-server:latest
+    container_name: redis-stack-server
+    ports:
+      - "6379:6379"
+
+  siramiks-serviceregistry:
+    image: "bryanyidev/serviceregistry:latest"
+    env_file:
+      - siramiks.env
+    container_name: siramiks-serviceregistry
+    ports:
+      - "8761:8761"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  siramiks-apigateway:
+    image: "bryanyidev/apigateway:latest"
+    container_name: siramiks-apigateway
+    ports:
+      - "9090:9090"
+    env_file:
+      - siramiks.env
+    environment:
+      ZIPKIN_SERVER_ADDRESS: http://zipkin:9411
+      # ZIPKIN_SERVER_ADDRESS: http://zipkin:9411
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+    depends_on:
+      - zipkin1
+      - redis
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9090/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  siramiks-authservice:
+    image: "bryanyidev/authservice:latest"
+    env_file:
+      - siramiks.env
+    container_name: siramiks-authservice
+    ports:
+      - "7070:7070"
+    depends_on:
+      siramiks-serviceregistry:
+        condition: service_healthy
+      siramiks-apigateway:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7070/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  siramiks-productservice:
+    image: "bryanyidev/productservice:latest"
+    env_file:
+      - siramiks.env
+    container_name: siramiks-productservice
+    ports:
+      - "8080:8080"
+    depends_on:
+      siramiks-serviceregistry:
+        condition: service_healthy
+      siramiks-apigateway:
+        condition: service_healthy
+      siramiks-authservice:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  siramiks-orderservice:
+    image: "bryanyidev/orderservice:latest"
+    env_file:
+      - siramiks.env
+    container_name: siramiks-orderservice
+    ports:
+      - "8081:8081"
+    depends_on:
+      siramiks-serviceregistry:
+        condition: service_healthy
+      siramiks-apigateway:
+        condition: service_healthy
+      siramiks-authservice:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  siramiks-paymentservice:
+    image: "bryanyidev/paymentservice:latest"
+    env_file:
+      - siramiks.env
+    container_name: siramiks-paymentservice
+    ports:
+      - "8082:8082"
+    depends_on:
+      siramiks-serviceregistry:
+        condition: service_healthy
+      siramiks-apigateway:
+        condition: service_healthy
+      siramiks-authservice:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
