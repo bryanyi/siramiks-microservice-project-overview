@@ -3,6 +3,8 @@
 ## Introduction
 This e-commerce microservices project was developed to deepen my understanding of modern, distributed system architectures. By implementing a set of interconnected services, I aimed to explore the core principles of microservices, including service discovery, inter-service communication, and distributed tracing. Through the use of technologies such as Eureka for service registration, OpenFeign for service-to-service communication, and Zipkin for end-to-end request tracing, this project serves as a learning platform to dive into the complexities of building and maintaining a robust, scalable, and resilient e-commerce application. 
 
+![architecture diagram](/assets/microservice_architecture_diagram.png)
+
 ## Service Repositories
 - [Product Service](https://github.com/bryanyi/siramiks-ProductService)
 - [Order Service](https://github.com/bryanyi/siramiks-OrderService)
